@@ -3,7 +3,7 @@
   publish = "build"
 
 [build.environment]
-  NODE_VERSION = "23"
+  NODE_VERSION = "18"
 
 # Redirect all requests to index.html for client-side routing
 [[redirects]]
