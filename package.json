@@ -80,7 +80,10 @@
   "scripts": {
     "server": "cd server && npm run dev",
     "lint": "eslint . --ext .js,.ts,.tsx --config eslint.config.mjs",
-    "start": "react-app-rewired start",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
     "dev": "concurrently \"npm run start\" \"npm run server\""
   },
   "devDependencies": {
