@@ -1,0 +1,404 @@
+.city-entrance {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.city-entrance.animate-in {
+  opacity: 1;
+}
+
+.city-entrance.animate-out {
+  opacity: 0;
+}
+
+.city-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  perspective: 1000px;
+}
+
+/* Stars Background */
+.stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(6, 182, 212, 0.1) 0%, transparent 70%);
+  animation: starsPulse 4s infinite alternate;
+}
+
+.stars::before,
+.stars::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, #06b6d4, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 40px 70px, #06b6d4, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 50px 160px, #06b6d4, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 90px 40px, #06b6d4, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 130px 80px, #06b6d4, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  opacity: 0;
+  animation: starsShimmer 4s infinite linear;
+}
+
+.stars::after {
+  background-position: 100px 100px;
+  animation-delay: -2s;
+}
+
+/* City Skyline */
+.city-skyline {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  transform-style: preserve-3d;
+  transform: translateZ(0);
+}
+
+.building {
+  position: relative;
+  width: 10%;
+  background: linear-gradient(to top, #1a1a2e, #16213e);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  border-radius: 4px 4px 0 0;
+  transform: translateY(100%);
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+
+.building:hover {
+  transform: translateY(95%) scale(1.02);
+  border-color: rgba(6, 182, 212, 0.8);
+  box-shadow: 0 0 30px rgba(6, 182, 212, 0.4);
+}
+
+.building-1 { height: 60%; animation-delay: 0.1s; }
+.building-2 { height: 75%; animation-delay: 0.2s; }
+.building-3 { height: 90%; animation-delay: 0.3s; }
+.building-4 { height: 85%; animation-delay: 0.4s; }
+.building-5 { height: 70%; animation-delay: 0.5s; }
+.building-6 { height: 80%; animation-delay: 0.6s; }
+.building-7 { height: 65%; animation-delay: 0.7s; }
+.building-8 { height: 95%; animation-delay: 0.8s; }
+
+.animate-in .building {
+  transform: translateY(0);
+}
+
+/* Windows */
+.windows {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  padding: 4px;
+  height: 100%;
+}
+
+.window {
+  background: rgba(6, 182, 212, 0.2);
+  border-radius: 2px;
+  height: 10px;
+  animation: windowGlow 3s infinite alternate;
+}
+
+.window:nth-child(3n) {
+  animation-delay: -1s;
+}
+
+.window:nth-child(3n+1) {
+  animation-delay: -2s;
+}
+
+/* Antenna */
+.antenna {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 20px;
+  background: rgba(6, 182, 212, 0.8);
+  animation: antennaPulse 2s infinite alternate;
+}
+
+/* Building Glow */
+.glow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background: linear-gradient(to top, rgba(6, 182, 212, 0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.building:hover .glow {
+  opacity: 1;
+}
+
+/* Floating Platforms */
+.floating-platforms {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.platform {
+  position: absolute;
+  width: 60px;
+  height: 20px;
+  background: rgba(6, 182, 212, 0.3);
+  border: 1px solid rgba(6, 182, 212, 0.5);
+  border-radius: 4px;
+  animation: float 6s infinite ease-in-out;
+}
+
+.platform-1 { left: 20%; top: 30%; animation-delay: -1s; }
+.platform-2 { left: 40%; top: 50%; animation-delay: -2s; }
+.platform-3 { left: 60%; top: 40%; animation-delay: -3s; }
+.platform-4 { left: 80%; top: 60%; animation-delay: -4s; }
+
+.platform-light {
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  background: #06b6d4;
+  border-radius: 50%;
+  filter: blur(4px);
+  animation: platformLight 2s infinite alternate;
+}
+
+/* Flying Vehicles */
+.flying-vehicles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.vehicle {
+  position: absolute;
+  width: 30px;
+  height: 10px;
+  background: rgba(6, 182, 212, 0.6);
+  border-radius: 10px;
+  animation: flyAcross 15s infinite linear;
+}
+
+.vehicle-light {
+  position: absolute;
+  top: 50%;
+  left: -5px;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background: #06b6d4;
+  border-radius: 50%;
+  filter: blur(2px);
+  animation: vehicleLight 1s infinite alternate;
+}
+
+.vehicle-1 { top: 20%; animation-delay: -2s; }
+.vehicle-2 { top: 40%; animation-delay: -5s; }
+.vehicle-3 { top: 60%; animation-delay: -8s; }
+.vehicle-4 { top: 30%; animation-delay: -11s; }
+.vehicle-5 { top: 50%; animation-delay: -14s; }
+
+/* Cyber Grid */
+.cyber-grid {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.grid-lines {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(rgba(6, 182, 212, 0.1) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(6, 182, 212, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: gridMove 20s infinite linear;
+}
+
+/* Energy Flow Lines */
+.energy-flows {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.energy-line {
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, #06b6d4, transparent);
+  opacity: 0.3;
+  animation: energyFlow 4s infinite linear;
+}
+
+.flow-1 { left: 10%; animation-delay: -0.5s; }
+.flow-2 { left: 30%; animation-delay: -1s; }
+.flow-3 { left: 50%; animation-delay: -1.5s; }
+.flow-4 { left: 70%; animation-delay: -2s; }
+.flow-5 { left: 90%; animation-delay: -2.5s; }
+
+/* Animations */
+@keyframes starsPulse {
+  0% { opacity: 0.3; }
+  100% { opacity: 0.6; }
+}
+
+@keyframes starsShimmer {
+  0% { opacity: 0; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0; }
+}
+
+@keyframes windowGlow {
+  0% { background: rgba(6, 182, 212, 0.1); }
+  100% { background: rgba(6, 182, 212, 0.4); }
+}
+
+@keyframes antennaPulse {
+  0% { box-shadow: 0 0 5px #06b6d4; }
+  100% { box-shadow: 0 0 15px #06b6d4; }
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes platformLight {
+  0% { opacity: 0.5; filter: blur(4px); }
+  100% { opacity: 1; filter: blur(6px); }
+}
+
+@keyframes flyAcross {
+  0% { transform: translateX(-100px); }
+  100% { transform: translateX(calc(100vw + 100px)); }
+}
+
+@keyframes vehicleLight {
+  0% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+@keyframes gridMove {
+  0% { transform: translateZ(0); }
+  100% { transform: translateZ(100px); }
+}
+
+@keyframes energyFlow {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes buttonPulse {
+  0% { box-shadow: 0 0 20px rgba(6, 182, 212, 0.4); }
+  50% { box-shadow: 0 0 30px rgba(6, 182, 212, 0.6), 0 0 50px rgba(6, 182, 212, 0.3); }
+  100% { box-shadow: 0 0 20px rgba(6, 182, 212, 0.4); }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .building {
+    width: 12%;
+  }
+  
+  .windows {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .platform {
+    display: none;
+  }
+  
+  .vehicle {
+    animation-duration: 10s;
+  }
+  
+  .content {
+    padding: 1rem;
+  }
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 2rem;
+  max-width: min(800px, 90vw);
+}
+
+/* Responsive Typography */
+@media (max-height: 800px) {
+  .title {
+    font-size: clamp(2rem, 5vw, 3.5rem) !important;
+    margin-bottom: 0.25rem !important;
+  }
+  
+  .subtitle {
+    font-size: clamp(1rem, 3vw, 1.5rem) !important;
+    margin-bottom: 2rem !important;
+  }
+  
+  .enter-button {
+    padding: 10px 30px !important;
+    font-size: 1.2rem !important;
+  }
+}
+
+@media (max-height: 600px) {
+  .city-skyline {
+    height: 60vh;
+  }
+  
+  .building {
+    transform: scale(0.8);
+  }
+  
+  .content {
+    padding: 1rem;
+  }
+}
+
+/* Ensure no horizontal scrollbar */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+} 

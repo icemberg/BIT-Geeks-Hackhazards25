@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+.crisis-dashboard-theme {
+    min-height: 100vh;
+    background: #000913;
+    color: #B3FFFF;
+    background-image: linear-gradient(180deg, rgba(0, 47, 91, 0.95) 0%, rgba(0, 18, 39, 0.95) 100%);
+    background-attachment: fixed;
+    font-family: 'Orbitron', sans-serif !important;
+    position: relative;
+    box-shadow: 0 0 40px 10px #00e6e6, 0 0 0 4px #003344 inset;
+    border-radius: 18px;
+    overflow: hidden;
+  }
+
+  /* Animated neon border */
+  .crisis-dashboard-theme::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    pointer-events: none;
+    box-shadow: 0 0 40px 10px #00e6e6, 0 0 0 4px #003344 inset;
+    animation: neon-border 2.5s linear infinite alternate;
+    z-index: 1;
+  }
+  @keyframes neon-border {
+    0% { box-shadow: 0 0 40px 10px #00e6e6, 0 0 0 4px #003344 inset; }
+    100% { box-shadow: 0 0 60px 20px #1AFFFF, 0 0 0 8px #005566 inset; }
+  }
+
+  /* Animated background grid overlay */
+  .crisis-dashboard-theme::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(90deg, rgba(26,255,255,0.04) 0 1px, transparent 1px 60px),
+                repeating-linear-gradient(180deg, rgba(26,255,255,0.04) 0 1px, transparent 1px 60px);
+    z-index: 0;
+    animation: grid-move 20s linear infinite;
+  }
+  @keyframes grid-move {
+    0% { background-position: 0 0, 0 0; }
+    100% { background-position: 60px 60px, 60px 60px; }
+  }
+
+  .crisis-dashboard-theme * {
+    font-family: 'Orbitron', sans-serif !important;
+    letter-spacing: 0.02em;
+  }
+
+  /* Glowing animated heading */
+  .crisis-dashboard-theme h1,
+  .crisis-dashboard-theme h2,
+  .crisis-dashboard-theme h3,
+  .crisis-dashboard-theme h4,
+  .crisis-dashboard-theme h5,
+  .crisis-dashboard-theme h6,
+  .crisis-dashboard-theme .chakra-heading {
+    font-family: 'Orbitron', sans-serif !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em !important;
+    text-shadow: 0 0 8px #00e6e6, 0 0 16px #1AFFFF, 0 0 2px #fff;
+    animation: heading-glow 2.5s ease-in-out infinite alternate;
+  }
+  @keyframes heading-glow {
+    0% { text-shadow: 0 0 8px #00e6e6, 0 0 16px #1AFFFF, 0 0 2px #fff; }
+    100% { text-shadow: 0 0 16px #1AFFFF, 0 0 32px #00e6e6, 0 0 8px #fff; }
+  }
+
+  .crisis-dashboard-theme .chakra-heading,
+  .crisis-dashboard-theme .chakra-text,
+  .crisis-dashboard-theme .chakra-badge,
+  .crisis-dashboard-theme .chakra-progress__filled-track {
+    color: #1AFFFF !important;
+  }
+
+  .crisis-dashboard-theme .chakra-card {
+    background: rgba(0, 24, 38, 0.95) !important;
+    border-radius: 0.75rem !important;
+    border: 1px solid rgba(0, 255, 255, 0.2) !important;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1) !important;
+    backdrop-filter: blur(10px) !important;
+    margin-bottom: 1rem;
+    transition: box-shadow 0.3s, transform 0.3s;
+    z-index: 2;
+  }
+  .crisis-dashboard-theme .chakra-card:hover {
+    box-shadow: 0 0 40px 8px #00e6e6, 0 0 0 2px #1AFFFF;
+    transform: translateY(-4px) scale(1.01);
+  }
+
+  .crisis-dashboard-theme .chakra-progress__filled-track {
+    background: #00E6E6 !important;
+    transition: all 0.3s ease-in-out;
+    animation: progress-pulse 2s infinite alternate;
+  }
+  @keyframes progress-pulse {
+    0% { box-shadow: 0 0 8px #00e6e6; }
+    100% { box-shadow: 0 0 24px #1AFFFF; }
+  }
+
+  .crisis-dashboard-theme .chakra-button {
+    background: #00E6E6 !important;
+    color: #fff !important;
+    border: 1px solid #1AFFFF !important;
+    transition: all 0.2s ease-in-out, box-shadow 0.3s;
+    font-family: 'Orbitron', sans-serif !important;
+    box-shadow: 0 0 8px #00e6e6;
+    z-index: 2;
+  }
+  .crisis-dashboard-theme .chakra-button:hover {
+    background: #1AFFFF !important;
+    box-shadow: 0 0 24px #1AFFFF, 0 0 8px #00e6e6;
+    transform: translateY(-2px) scale(1.03);
+  }
+  .crisis-dashboard-theme .chakra-button:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  .crisis-dashboard-theme .chakra-container {
+    padding: 0 !important;
+  }
+
+  /* Custom scrollbar for dashboard */
+  .crisis-dashboard-theme {
+    scrollbar-width: thin;
+    scrollbar-color: #00e6e6 #001a1a;
+  }
+  .crisis-dashboard-theme::-webkit-scrollbar {
+    width: 10px;
+    background: #001a1a;
+  }
+  .crisis-dashboard-theme::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #00e6e6 0%, #1AFFFF 100%);
+    border-radius: 8px;
+    box-shadow: 0 0 8px #00e6e6;
+  }
+
+  .crisis-dashboard-theme .chakra-badge[data-status="critical"] {
+    background: #ffb3b3 !important;
+    color: #7a0000 !important;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 2px 10px;
+    font-size: 0.9em;
+  }
+  .crisis-dashboard-theme .chakra-badge[data-status="high"] {
+    background: #ffe6b3 !important;
+    color: #7a5a00 !important;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 2px 10px;
+    font-size: 0.9em;
+  }
+  .crisis-dashboard-theme .chakra-avatar__initials {
+    font-family: 'Orbitron', sans-serif !important;
+    font-weight: 700;
+  }
+  .crisis-dashboard-theme .chakra-badge[data-status="completed"] {
+    background: #e6ffe6 !important;
+    color: #006600 !important;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 2px 10px;
+    font-size: 0.9em;
+  }
+  .crisis-dashboard-theme .chakra-badge[data-status="in-progress"] {
+    background: #e6fff9 !important;
+    color: #008080 !important;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 2px 10px;
+    font-size: 0.9em;
+  }
+  .crisis-dashboard-theme .chakra-badge[data-status="pending"] {
+    background: #f9ffe6 !important;
+    color: #808000 !important;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 2px 10px;
+    font-size: 0.9em;
+  }
+  .crisis-dashboard-theme .chakra-stack {
+    gap: 1.5rem !important;
+  }
+  .crisis-dashboard-theme .chakra-heading {
+    font-weight: 700 !important;
+  }
+  .crisis-dashboard-theme .chakra-text {
+    font-size: 1.05em !important;
+  }
+  .crisis-dashboard-theme h1,
+  .crisis-dashboard-theme h2,
+  .crisis-dashboard-theme h3,
+  .crisis-dashboard-theme h4,
+  .crisis-dashboard-theme h5,
+  .crisis-dashboard-theme h6,
+  .crisis-dashboard-theme .chakra-heading {
+    font-family: 'Orbitron', sans-serif !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em !important;
+  }

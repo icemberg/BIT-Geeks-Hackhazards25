@@ -1,0 +1,295 @@
+/* Import cyberpunk fonts */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Syncopate:wght@400;700&family=Share+Tech+Mono&display=swap');
+
+.city-selection-dashboard {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, rgba(13, 13, 23, 0.97) 0%, rgba(11, 16, 31, 0.97) 50%, rgba(7, 26, 48, 0.97) 100%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+/* Cyberpunk Grid Background */
+.city-selection-dashboard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px) 0 0 / 30px 30px,
+    linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px) 0 0 / 30px 30px;
+  pointer-events: none;
+  animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(50px); }
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 60px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 0;
+  gap: 1.5rem;
+  z-index: 10;
+  border-right: 1px solid rgba(6, 182, 212, 0.1);
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+}
+
+.sidebar-icon {
+  color: rgba(255, 255, 255, 0.6) !important;
+  transition: all 0.3s ease !important;
+  font-size: 1.2rem !important;
+}
+
+.sidebar-icon:hover {
+  color: #06b6d4 !important;
+  transform: scale(1.1);
+}
+
+/* Main Content Styles */
+.main-content {
+  flex: 1;
+  padding: 1.5rem;
+  position: relative;
+  overflow-y: auto;
+    height: 100vh;
+  overflow-x: hidden;
+  margin: 0;
+  padding-left: 80px;
+}
+
+.dashboard-title {
+  font-family: 'Syncopate', sans-serif !important;
+  font-size: 1.5rem !important;
+  letter-spacing: 0.15em !important;
+  margin: 0 0 2rem 0 !important;
+  padding: 40px 0 0 70px !important;
+  background: linear-gradient(45deg, #06b6d4, #0891b2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  display: inline-block;
+  height: 20%;
+}
+
+/* City Grid Styles */
+.city-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+  padding: 0;
+  max-width: 1200px;
+  margin-top: 150px;
+  justify-content: start;
+}
+
+/* Card Styles */
+.city-card {
+  height: 280px;
+  position: relative;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  margin: 0;
+  cursor: pointer;
+  width: 100%;
+}
+
+.card-flipper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.city-card-content {
+  height: 100%;
+  overflow: hidden;
+  border-radius: 8px !important;
+  position: absolute;
+  width: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: rgba(0, 0, 0, 0.5) !important;
+  border: 1px solid rgba(6, 182, 212, 0.1);
+  transition: all 0.3s ease;
+}
+
+.city-card:hover .city-card-content {
+  border-color: rgba(6, 182, 212, 0.5);
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+}
+
+.card-front {
+  transform: rotateY(0deg);
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
+.city-image {
+  height: 50%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  border-bottom: 1px solid rgba(6, 182, 212, 0.1);
+}
+
+.city-image::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.8));
+}
+
+.city-info {
+  padding: 1rem;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.city-name {
+  font-family: 'Syncopate', sans-serif !important;
+  font-size: 1rem !important;
+  letter-spacing: 0.1em !important;
+  margin-bottom: 0.25rem !important;
+  color: #06b6d4;
+}
+
+.city-description {
+  font-family: 'Share Tech Mono', monospace !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 0.75rem !important;
+  line-height: 1.4 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.city-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(6, 182, 212, 0.05);
+  padding: 0.25rem;
+  border-radius: 4px;
+  border: 1px solid rgba(6, 182, 212, 0.1);
+}
+
+.metric .label {
+  font-family: 'Share Tech Mono', monospace;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+}
+
+.metric .value {
+  font-family: 'Rajdhani', sans-serif;
+  color: #06b6d4;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+/* Feature and Challenge Tags */
+.feature-tag, .challenge-tag {
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.challenge-tag {
+  background: rgba(255, 99, 71, 0.1);
+  border-color: rgba(255, 99, 71, 0.2);
+}
+
+/* Selected City Styles */
+.city-card.selected .city-card-content {
+  border-color: #06b6d4;
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.3) !important;
+}
+
+/* Enter City Button Styles */
+.enter-city-button {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 100;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .city-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    padding: 0;
+  }
+
+  .city-card {
+    height: 260px;
+  }
+
+  .main-content {
+    padding-left: 70px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .city-grid {
+    grid-template-columns: repeat(3, 240px);
+    justify-content: start;
+  }
+}
+
+/* Animation Classes */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(6, 182, 212, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); }
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+/* Glowing Text Effect */
+@keyframes textGlow {
+  from { text-shadow: 0 0 5px currentColor, 0 0 10px currentColor; }
+  to { text-shadow: 0 0 10px currentColor, 0 0 20px currentColor; }
+}
+
+.city-name, .dashboard-title {
+  position: relative;
+  animation: textGlow 2s ease-in-out infinite alternate;
+}
