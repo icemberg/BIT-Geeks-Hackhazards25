@@ -1,5 +1,5 @@
 [build]
-  command = "npm install --ignore-scripts --force && npm run build"
+  command = "npm install --ignore-scripts && npm run build"
   publish = "build"
 
 [build.environment]
