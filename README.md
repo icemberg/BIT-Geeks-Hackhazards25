@@ -1,4 +1,5 @@
-![ChatGPT Image Apr 27, 2025, 10_19_46 PM](https://github.com/user-attachments/assets/68604703-bcaa-446e-9538-2e0ddf3f6a0d)
+![WhatsApp Image 2025-04-28 at 13 15 39_ed4ed561](https://github.com/user-attachments/assets/68fa64da-3993-4b48-a465-5bb2cb9a9f73)
+
 
 
 ---
@@ -104,7 +105,7 @@ Highlight the most important features of your project:
 
 ## 📽️ Demo & Deliverables
 
-- **Demo Video Link:** [Paste YouTube or Loom link here]  
+- **Demo Video Link:** [https://youtu.be/4q32H9ajtJ8]  
 - **Pitch Deck / PPT Link:**   https://1drv.ms/p/c/e55ac9d06a018e00/EYAC4CQt6_lCkEojvA8cVXwBTwap8Ukx_l0le_wuyMLBnA?e=0z0kQL
 
 ## ✅ Tasks & Bonus Checklist
