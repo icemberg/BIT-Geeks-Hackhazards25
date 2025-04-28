@@ -157,8 +157,8 @@ To run Civic Quest locally:
 ---
 
 # Install dependencies
-cd civic_quest
-npm install
+- cd civic_quest
+- npm install
 
 ---
 
