@@ -45,6 +45,7 @@
     "@stellar/stellar-sdk": "^13.2.0",
     "@types/glob": "^8.1.0",
     "@types/hapi__joi": "^17.1.15",
+    "@types/react-dom": "^18.2.19",
     "@types/recharts": "^1.8.29",
     "assert": "^2.1.0",
     "axios": "^1.7.7",
