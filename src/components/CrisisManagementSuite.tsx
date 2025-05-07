@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChakraProvider, Container, VStack, Box, Button } from '@chakra-ui/react';
+import { ChakraProvider, Container, VStack, Box, Button, Icon } from '@chakra-ui/react';
 import CrisisDashboard from './CrisisDashboard';
 import ActionPlan from './ActionPlan';
 import CollaborationTracker from './CollaborationTracker';
@@ -90,7 +90,7 @@ function CrisisManagementSuite() {
           >
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <span>Communication Dashboard</span>
-              <FaArrowRight style={{ marginLeft: '8px' }} />
+              <Icon as={FaArrowRight} style={{ marginLeft: '8px' }} />
             </div>
           </Button>
         </Box>

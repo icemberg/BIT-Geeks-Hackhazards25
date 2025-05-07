@@ -7,6 +7,7 @@ import {
   Text,
   Badge,
   Button,
+  Icon,
 } from '@chakra-ui/react';
 import { Card, CardHeader, CardBody } from '@chakra-ui/card';
 import { Progress } from '@chakra-ui/progress';
@@ -14,6 +15,7 @@ import { useToast } from '@chakra-ui/toast';
 import { Crisis, CrisisSeverity, CrisisType } from '../types/crisis';
 import { CrisisData } from '../types/ai';
 import { FaExclamationTriangle, FaChartLine, FaUsers } from 'react-icons/fa';
+import { IconType } from 'react-icons';
 import { WalletManager } from '../web3/wallet';
 import { CrisisContract } from '../web3/contract';
 
@@ -170,11 +172,11 @@ const CrisisDashboard: React.FC<CrisisDashboardProps> = ({ onCrisisSelect }) => 
   const getTypeIcon = (type: CrisisType) => {
     switch (type) {
       case 'environmental':
-        return <Box as={FaExclamationTriangle} boxSize={4} mr={2} />;
+        return <Icon as={FaExclamationTriangle} boxSize={4} mr={2} />;
       case 'health':
-        return <Box as={FaChartLine} boxSize={4} mr={2} />;
+        return <Icon as={FaChartLine} boxSize={4} mr={2} />;
       default:
-        return <Box as={FaUsers} boxSize={4} mr={2} />;
+        return <Icon as={FaUsers} boxSize={4} mr={2} />;
     }
   };
 

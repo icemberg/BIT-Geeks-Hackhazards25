@@ -3,6 +3,7 @@ import { Send } from '@mui/icons-material';
 // @ts-ignore
 import  Fluvio,{ PartitionConsumer } from '@fluvio/client';
 import { pipe } from '@screenpipe/browser';
+import { v4 as uuidv4 } from 'uuid';
 
 interface ChatMessage {
   id: string;

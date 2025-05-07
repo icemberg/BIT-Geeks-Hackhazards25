@@ -16,6 +16,7 @@ import { Alert, AlertIcon } from '@chakra-ui/alert';
 import { CrisisData, AIRecommendation } from '../types/ai';
 import { aiService } from '../services/aiService';
 import { FaExclamationTriangle } from 'react-icons/fa';
+import { IconType } from 'react-icons';
 
 interface ActionPlanProps {
   crisisId: string;
@@ -85,7 +86,7 @@ const ActionPlan: React.FC<ActionPlanProps> = ({ crisisId, onActionComplete, cri
           <Flex align="center" gap={8} py={8}>
             <Icon as={FaExclamationTriangle} boxSize={64} color="cyan.200" />
             <Text fontSize="2xl" color="cyan.100" fontFamily="'Orbitron', sans-serif">
-              {error}
+            {error}
             </Text>
           </Flex>
         ) : recommendations ? (
