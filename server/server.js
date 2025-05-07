@@ -44,14 +44,13 @@ function createWebSocketServer(basePort = 9004) {
 
 async function initFluvio() {
   try {
-     const fluvio = new Fluvio({
-      host: '127.0.0.1',
+    const fluvio = new Fluvio({
+      host: process.env.REACT_APP_FLUVIO_ENDPOINT || '127.0.0.1',
       port: 9003
-     });
+    });
     await fluvio.connect();
     const admin = await fluvio.admin();
 
-    // Ensure topic exists
     const topicName = 'chat-messages';
     const topicConfig = { partitions: 1, replication: 1, ignoreRackAssignment: true };
 
@@ -144,6 +143,94 @@ async function startServers() {
     process.exit(1);
   }
 }
+
+// Initialize Fluvio when the function is first loaded
+initFluvio().catch(console.error);
+
+// Netlify Function handler for API endpoints
+exports.handler = async function(event, context) {
+  // Handle WebSocket upgrade requests
+  if (event.httpMethod === 'GET' && event.headers.Upgrade === 'websocket') {
+    return {
+      statusCode: 101,
+      headers: {
+        'Upgrade': 'websocket',
+        'Connection': 'Upgrade'
+      }
+    };
+  }
+
+  // Handle regular HTTP requests
+  if (event.httpMethod === 'POST' && event.path === '/.netlify/functions/api/send-message') {
+    if (!producer) {
+      return {
+        statusCode: 503,
+        body: JSON.stringify({ error: 'Fluvio not initialized' })
+      };
+    }
+
+    try {
+      const body = JSON.parse(event.body);
+      const { id, type, sender, message, timestamp } = body;
+      const completeMsg = {
+        id: id || Date.now().toString(),
+        type,
+        sender,
+        message,
+        timestamp: timestamp || new Date().toISOString(),
+      };
+
+      await producer.send(completeMsg.id, JSON.stringify(completeMsg));
+      console.log('📤 Message sent:', completeMsg);
+      
+      return {
+        statusCode: 200,
+        body: JSON.stringify({ success: true })
+      };
+    } catch (err) {
+      console.error('Send error:', err);
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: err.message })
+      };
+    }
+  }
+
+  // Handle WebSocket connections
+  if (event.httpMethod === 'GET' && event.path === '/.netlify/functions/ws') {
+    if (!consumer) {
+      return {
+        statusCode: 503,
+        body: JSON.stringify({ error: 'Fluvio not initialized' })
+      };
+    }
+
+    try {
+      const stream = await consumer.createStream(Offset.FromEnd());
+      for await (const record of stream) {
+        // Handle WebSocket message streaming
+        // Note: This is a simplified version. In a real implementation,
+        // you'd need to handle the WebSocket connection properly
+        return {
+          statusCode: 200,
+          body: record.valueString()
+        };
+      }
+    } catch (err) {
+      console.error('Stream error:', err);
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: 'Streaming error' })
+      };
+    }
+  }
+
+  // Default response for unhandled routes
+  return {
+    statusCode: 404,
+    body: JSON.stringify({ error: 'Not found' })
+  };
+};
 
 // Kickoff
 startServers();
