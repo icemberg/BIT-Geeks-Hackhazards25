@@ -2,6 +2,7 @@
   "name": "civic-quest",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "main": "index.js",
   "dependencies": {
     "@babel/core": "^7.26.10",
@@ -115,8 +116,8 @@
     "server": "cd server && npm run dev",
     "lint": "eslint . --ext .js,.ts,.tsx --config eslint.config.mjs",
     "start": "react-app-rewired start",
-    "build": "CI=false react-app-rewired build",
-    "vercel-build": "CI=false react-app-rewired build",
+    "build": "set \"CI=false\" && react-app-rewired build",
+    "vercel-build": "set \"CI=false\" && react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "dev": "concurrently \"npm run start\" \"npm run server\""
