@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { pipe } from '@screenpipe/browser';
 import {
   calculateEconomicImpact,
   calculateSocialImpact,
@@ -59,6 +58,42 @@ export interface ProposalAnalysis {
   };
 }
 
+// Mock implementation to replace @screenpipe/browser
+const mockScreenpipe = {
+  queryScreenpipe: async ({ q }: { q: string }) => {
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    // Generate mock responses based on the query
+    const mockResponses = [
+      "Citizens have expressed concerns about traffic congestion in the proposed area.",
+      "Environmental impact studies suggest minimal disruption to local ecosystems.",
+      "Economic projections indicate a 15% increase in local business activity.",
+      "Community surveys show 78% support for the initiative.",
+      "Infrastructure assessments reveal the need for additional road maintenance.",
+      "Social media sentiment analysis shows positive engagement with the proposal.",
+      "Historical data from similar projects suggests a 3-year timeline for completion.",
+      "Budget analysis indicates the proposal is within expected cost parameters.",
+      "Stakeholder interviews reveal strong support from local businesses.",
+      "Technical feasibility studies confirm the project can be implemented as planned."
+    ];
+    
+    // Return a random subset of responses
+    const shuffled = [...mockResponses].sort(() => 0.5 - Math.random());
+    const selected = shuffled.slice(0, Math.floor(Math.random() * 5) + 3);
+    
+    return {
+      data: selected.map(text => ({
+        type: "UI",
+        content: { 
+          text,
+          transcript: text // For Audio type compatibility
+        }
+      }))
+    };
+  }
+};
+
 export const useGovernanceAnalysis = () => {
   const [analysis, setAnalysis] = useState<ProposalAnalysis | null>(null);
   const [loading, setLoading] = useState(false);
@@ -77,16 +112,12 @@ export const useGovernanceAnalysis = () => {
     setError(null);
     
     try {
-      // Try to use Screenpipe for analysis
+      // Try to use mock Screenpipe for analysis
       let context = '';
       
       try {
-        const results = await pipe.queryScreenpipe({
-          q: `Analyze this proposal: ${proposal.title} - ${proposal.description}. Consider its impact on the city's infrastructure, social fabric, environment, and economy.`,
-          contentType: 'all',
-          limit: 10,
-          startTime: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), // Last 7 days
-          endTime: new Date().toISOString()
+        const results = await mockScreenpipe.queryScreenpipe({
+          q: `Analyze this proposal: ${proposal.title} - ${proposal.description}. Consider its impact on the city's infrastructure, social fabric, environment, and economy.`
         });
 
         if (results?.data) {
@@ -98,8 +129,8 @@ export const useGovernanceAnalysis = () => {
           }).join(' ');
         }
       } catch (screenpipeError) {
-        console.warn('Screenpipe analysis failed, using fallback analysis:', screenpipeError);
-        // Continue with fallback analysis
+        console.error('Error querying Screenpipe:', screenpipeError);
+        // Continue with default analysis if Screenpipe fails
       }
 
       // If Screenpipe failed or returned no data, use a fallback context

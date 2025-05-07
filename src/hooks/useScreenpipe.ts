@@ -1,5 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
-import { pipe } from '@screenpipe/browser';
+import { useState, useCallback } from 'react';
 
 interface ChatMessage {
   id: string;
@@ -7,6 +6,37 @@ interface ChatMessage {
   content: string;
   timestamp: Date;
 }
+
+// Mock implementation to replace @screenpipe/browser
+const mockScreenpipe = {
+  queryScreenpipe: async ({ q }: { q: string }) => {
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    // Generate mock responses based on the query
+    const mockResponses = [
+      "Citizens are discussing infrastructure improvements in the downtown area.",
+      "Recent community feedback suggests increasing support for environmental initiatives.",
+      "Economic reports indicate positive growth in the tech sector.",
+      "Social surveys show strong community engagement in local governance.",
+      "Environmental monitoring data reveals improving air quality metrics."
+    ];
+    
+    // Return a random subset of responses
+    const shuffled = [...mockResponses].sort(() => 0.5 - Math.random());
+    const selected = shuffled.slice(0, Math.floor(Math.random() * 3) + 1);
+    
+    return {
+      data: selected.map(text => ({
+        type: "UI",
+        content: { 
+          text,
+          transcription: text // Add transcription for Audio type compatibility
+        }
+      }))
+    };
+  }
+};
 
 export const useScreenpipe = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -23,13 +53,9 @@ export const useScreenpipe = () => {
 
       setMessages(prev => [...prev, userMessage]);
 
-      // Query Screenpipe for relevant context
-      const results = await pipe.queryScreenpipe({
-        q: content,
-        contentType: "all",
-        limit: 5,
-        startTime: new Date(Date.now() - 60 * 60 * 1000).toISOString(), // Last hour
-        endTime: new Date().toISOString()
+      // Query mock Screenpipe for relevant context
+      const results = await mockScreenpipe.queryScreenpipe({
+        q: content
       });
 
       if (!results?.data) {
