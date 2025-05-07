@@ -66,8 +66,13 @@
   node_bundler = "esbuild"
 
 # Edge functions configuration
-[edge_functions]
-  directory = "edge-functions"
+[[edge_functions]]
+  path = "/api/*"
+  function = "api"
+
+[[edge_functions]]
+  path = "/ws/*"
+  function = "ws"
 
 # Build plugins
 [[plugins]]
