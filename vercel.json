@@ -1,0 +1,55 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
+    },
+    {
+      "src": "server/**/*.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/server/api/$1"
+    },
+    {
+      "src": "/ws/(.*)",
+      "dest": "/server/ws/$1"
+    },
+    {
+      "src": "/static/(.*)",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      },
+      "continue": true
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "REACT_APP_API_URL": "/api",
+    "REACT_APP_WS_URL": "/ws",
+    "REACT_APP_CHAIN_ID": "10143",
+    "REACT_APP_MONAD_RPC_URL": "https://testnet-rpc.monad.xyz",
+    "REACT_APP_FLUVIO_ENDPOINT": "wss://testnet-fluvio.monad.xyz",
+    "REACT_APP_WEBSOCKET_URL": "wss://testnet-ws.monad.xyz",
+    "GENERATE_SOURCEMAP": "false",
+    "NODE_OPTIONS": "--max_old_space_size=4096",
+    "PRIVATE_KEY": "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
+    "REACT_APP_CRISIS_MANAGER_ADDRESS": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    "REACT_APP_GROQ_API_KEY": "gsk_1234567890abcdefghijklmnopqrstuvwxyz",
+    "SENTRY_AUTH_TOKEN": "sntrys_1234567890abcdefghijklmnopqrstuvwxyz",
+    "SKIP_PREFLIGHT_CHECK": "true",
+    "NODE_VERSION": "18.20.8",
+    "NPM_FLAGS": "--legacy-peer-deps"
+  }
+} 
