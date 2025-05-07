@@ -3,6 +3,7 @@
   publish = "build"
   base = "."
   functions = "server"
+  ignore = "node_modules, .git, .gitignore, README.md, *.log"
 
 [build.environment]
   NODE_VERSION = "18.20.8"
@@ -12,10 +13,6 @@
   SKIP_PREFLIGHT_CHECK = "true"
   NODE_ENV = "production"
   NODE_OPTIONS = "--max_old_space_size=4096"
-
-# Ignore files during build
-[build.ignore]
-  files = "node_modules, .git, .gitignore, README.md, *.log"
 
 # Redirect all requests to index.html for client-side routing
 [[redirects]]
