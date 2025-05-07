@@ -2,6 +2,7 @@
   command = "npm run build"
   publish = "build"
   base = "."
+  functions = "server"
 
 [build.environment]
   NODE_VERSION = "18"
@@ -10,6 +11,10 @@
   GENERATE_SOURCEMAP = "false"
   SKIP_PREFLIGHT_CHECK = "true"
   NODE_ENV = "production"
+
+# Include all necessary files in the deployment
+[[build.ignore]]
+  files = ["node_modules", ".git", ".gitignore", "README.md", "*.log"]
 
 # Redirect all requests to index.html for client-side routing
 [[redirects]]
@@ -55,26 +60,27 @@
 # Environment variables
 [context.production.environment]
   NODE_ENV = "production"
-  REACT_APP_API_URL = "https://your-site-name.netlify.app/.netlify/functions/api"
-  REACT_APP_WS_URL = "wss://your-site-name.netlify.app/.netlify/functions/ws"
+  REACT_APP_API_URL = "/.netlify/functions/api"
+  REACT_APP_WS_URL = "/.netlify/functions/ws"
   REACT_APP_CHAIN_ID = "1337"
   REACT_APP_MONAD_RPC_URL = "https://rpc.monad.xyz"
   REACT_APP_FLUVIO_ENDPOINT = "https://fluvio.monad.xyz"
-  REACT_APP_WEBSOCKET_URL = "wss://your-site-name.netlify.app/.netlify/functions/ws"
+  REACT_APP_WEBSOCKET_URL = "/.netlify/functions/ws"
 
 [context.deploy-preview.environment]
   NODE_ENV = "preview"
-  REACT_APP_API_URL = "https://deploy-preview-${PR_NUMBER}--your-site-name.netlify.app/.netlify/functions/api"
-  REACT_APP_WS_URL = "wss://deploy-preview-${PR_NUMBER}--your-site-name.netlify.app/.netlify/functions/ws"
+  REACT_APP_API_URL = "/.netlify/functions/api"
+  REACT_APP_WS_URL = "/.netlify/functions/ws"
   REACT_APP_CHAIN_ID = "1337"
   REACT_APP_MONAD_RPC_URL = "https://rpc.monad.xyz"
   REACT_APP_FLUVIO_ENDPOINT = "https://fluvio.monad.xyz"
-  REACT_APP_WEBSOCKET_URL = "wss://deploy-preview-${PR_NUMBER}--your-site-name.netlify.app/.netlify/functions/ws"
+  REACT_APP_WEBSOCKET_URL = "/.netlify/functions/ws"
 
 # Functions configuration
 [functions]
   directory = "server"
   node_bundler = "esbuild"
+  external_node_modules = ["express", "cors", "ws", "@fluvio/client"]
 
 # Edge functions configuration
 [[edge_functions]]
