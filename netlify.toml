@@ -5,16 +5,17 @@
   functions = "server"
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "18.20.8"
   NPM_FLAGS = "--legacy-peer-deps"
   CI = "false"
   GENERATE_SOURCEMAP = "false"
   SKIP_PREFLIGHT_CHECK = "true"
   NODE_ENV = "production"
+  NODE_OPTIONS = "--max_old_space_size=4096"
 
-# Include all necessary files in the deployment
-[[build.ignore]]
-  files = ["node_modules", ".git", ".gitignore", "README.md", "*.log"]
+# Ignore files during build
+[build.ignore]
+  files = "node_modules, .git, .gitignore, README.md, *.log"
 
 # Redirect all requests to index.html for client-side routing
 [[redirects]]
@@ -62,19 +63,27 @@
   NODE_ENV = "production"
   REACT_APP_API_URL = "/.netlify/functions/api"
   REACT_APP_WS_URL = "/.netlify/functions/ws"
-  REACT_APP_CHAIN_ID = "1337"
-  REACT_APP_MONAD_RPC_URL = "https://rpc.monad.xyz"
-  REACT_APP_FLUVIO_ENDPOINT = "https://fluvio.monad.xyz"
-  REACT_APP_WEBSOCKET_URL = "/.netlify/functions/ws"
+  REACT_APP_CHAIN_ID = "10143"
+  REACT_APP_MONAD_RPC_URL = "https://testnet-rpc.monad.xyz"
+  REACT_APP_FLUVIO_ENDPOINT = "wss://testnet-fluvio.monad.xyz"
+  REACT_APP_WEBSOCKET_URL = "wss://testnet-ws.monad.xyz"
+  PRIVATE_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
+  REACT_APP_CRISIS_MANAGER_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+  REACT_APP_GROQ_API_KEY = "gsk_1234567890abcdefghijklmnopqrstuvwxyz"
+  SENTRY_AUTH_TOKEN = "sntrys_1234567890abcdefghijklmnopqrstuvwxyz"
 
 [context.deploy-preview.environment]
   NODE_ENV = "preview"
   REACT_APP_API_URL = "/.netlify/functions/api"
   REACT_APP_WS_URL = "/.netlify/functions/ws"
-  REACT_APP_CHAIN_ID = "1337"
-  REACT_APP_MONAD_RPC_URL = "https://rpc.monad.xyz"
-  REACT_APP_FLUVIO_ENDPOINT = "https://fluvio.monad.xyz"
-  REACT_APP_WEBSOCKET_URL = "/.netlify/functions/ws"
+  REACT_APP_CHAIN_ID = "10143"
+  REACT_APP_MONAD_RPC_URL = "https://testnet-rpc.monad.xyz"
+  REACT_APP_FLUVIO_ENDPOINT = "wss://testnet-fluvio.monad.xyz"
+  REACT_APP_WEBSOCKET_URL = "wss://testnet-ws.monad.xyz"
+  PRIVATE_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
+  REACT_APP_CRISIS_MANAGER_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+  REACT_APP_GROQ_API_KEY = "gsk_1234567890abcdefghijklmnopqrstuvwxyz"
+  SENTRY_AUTH_TOKEN = "sntrys_1234567890abcdefghijklmnopqrstuvwxyz"
 
 # Functions configuration
 [functions]
