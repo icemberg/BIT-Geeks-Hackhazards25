@@ -19,18 +19,21 @@
   from = "/*"
   to = "/index.html"
   status = 200
+  force = true
 
 # Handle API requests
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"
   status = 200
+  force = true
 
 # Handle WebSocket connections
 [[redirects]]
   from = "/ws/*"
   to = "/.netlify/functions/ws/:splat"
   status = 200
+  force = true
 
 # Security headers
 [[headers]]
