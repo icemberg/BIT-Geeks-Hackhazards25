@@ -14,26 +14,23 @@
   NODE_ENV = "production"
   NODE_OPTIONS = "--max_old_space_size=4096"
 
-# Redirect all requests to index.html for client-side routing
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-  force = true
-
 # Handle API requests
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"
   status = 200
-  force = true
 
 # Handle WebSocket connections
 [[redirects]]
   from = "/ws/*"
   to = "/.netlify/functions/ws/:splat"
   status = 200
-  force = true
+
+# Redirect all requests to index.html for client-side routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
 
 # Security headers
 [[headers]]
