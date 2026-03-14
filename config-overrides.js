@@ -6,7 +6,7 @@ module.exports = function override(config, env) {
   // Add TypeScript rule
   config = addWebpackModuleRule({
     test: /\.(ts|tsx)$/,
-    exclude: /node_modules\/(?!(groq-sdk|@sentry|@fluvio|scheduler)\/).*/,
+    exclude: /node_modules\/(?!(groq-sdk|@sentry|@fluvio)\/).*/,
     use: [
       {
         loader: 'babel-loader',
@@ -60,7 +60,7 @@ module.exports = function override(config, env) {
   // Add webpack aliases
   config = addWebpackAlias({
     '@': path.resolve(__dirname, 'src'),
-    'scheduler': require.resolve('scheduler/cjs/scheduler.development.js'),
+
     'process/browser': require.resolve('process/browser'),
     '@fluvio/client': path.resolve(__dirname, 'src/mocks/fluvioMock.ts'),
     // Add aliases for Next.js modules
