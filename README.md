@@ -106,6 +106,7 @@ Highlight the most important features of your project:
 
 - **Demo Video Link:** [Paste YouTube or Loom link here]  
 - **Pitch Deck / PPT Link:**   https://1drv.ms/p/c/e55ac9d06a018e00/EYAC4CQt6_lCkEojvA8cVXwBTwap8Ukx_l0le_wuyMLBnA?e=0z0kQL
+- **Deployment Link:** https://comforting-daffodil-74bad1.netlify.app/
 
 ## ✅ Tasks & Bonus Checklist
 
