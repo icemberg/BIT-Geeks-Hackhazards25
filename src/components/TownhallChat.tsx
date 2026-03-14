@@ -2,8 +2,20 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Send } from '@mui/icons-material';
 // @ts-ignore
 import  Fluvio,{ PartitionConsumer } from '@fluvio/client';
-import { pipe } from '@screenpipe/browser';
 import { v4 as uuidv4 } from 'uuid';
+
+// Safe screenpipe loader: tries real module, falls back to mock
+let pipe: any = {
+  queryScreenpipe: async () => ({ data: [] })
+};
+try {
+  const screenpipeModule = require('@screenpipe/browser');
+  if (screenpipeModule && screenpipeModule.pipe) {
+    pipe = screenpipeModule.pipe;
+  }
+} catch (e) {
+  console.warn('[TownhallChat] @screenpipe/browser unavailable, using mock');
+}
 
 interface ChatMessage {
   id: string;

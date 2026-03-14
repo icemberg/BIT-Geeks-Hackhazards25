@@ -14,12 +14,8 @@
   NODE_ENV = "production"
   NODE_OPTIONS = "--max_old_space_size=4096"
 
-# Redirect all requests to index.html for client-side routing
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-  force = true
+# IMPORTANT: More specific redirects MUST come before the catch-all.
+# Netlify evaluates redirects in order; the first match wins.
 
 # Handle API requests
 [[redirects]]
@@ -34,6 +30,13 @@
   to = "/.netlify/functions/ws/:splat"
   status = 200
   force = true
+
+# Catch-all: redirect everything else to index.html for client-side routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
 
 # Security headers
 [[headers]]
@@ -101,4 +104,4 @@
   port = 8888
   targetPort = 3000
   publish = "build"
-  autoLaunch = true 
+  autoLaunch = true
