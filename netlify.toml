@@ -6,7 +6,7 @@
   ignore = "node_modules, .git, .gitignore, README.md, *.log"
 
 [build.environment]
-  NODE_VERSION = "18.20.8"
+  NODE_VERSION = "20"
   NPM_FLAGS = "--legacy-peer-deps"
   CI = "false"
   GENERATE_SOURCEMAP = "false"
@@ -90,15 +90,6 @@
   directory = "server"
   node_bundler = "esbuild"
   external_node_modules = ["express", "cors", "ws", "@fluvio/client"]
-
-# Edge functions configuration
-[[edge_functions]]
-  path = "/api/*"
-  function = "api"
-
-[[edge_functions]]
-  path = "/ws/*"
-  function = "ws"
 
 # Build plugins
 [[plugins]]
