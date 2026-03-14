@@ -11,7 +11,14 @@
 const express = require('express');
 const cors = require('cors');
 const { WebSocketServer } = require('ws');
-const { Fluvio, Offset } = require('@fluvio/client');
+let Fluvio, Offset;
+try {
+  const fluvioClient = require('@fluvio/client');
+  Fluvio = fluvioClient.Fluvio;
+  Offset = fluvioClient.Offset;
+} catch (e) {
+  console.warn("⚠️ @fluvio/client failed to load. Running without Fluvio (likely on Windows).");
+}
 require('dotenv').config();
 
 let producer;
@@ -27,23 +34,31 @@ app.use(express.json());
  * @param {number} basePort
  */
 function createWebSocketServer(basePort = 9004) {
-  try {
+  return new Promise((resolve, reject) => {
     const wss = new WebSocketServer({ port: basePort });
-    wss.on('listening', () =>
-      console.log(`✅ WebSocket listening on :${basePort}`)
-    );
-    return wss;
-  } catch (err) {
-    if (err.code === 'EADDRINUSE') {
-      console.warn(`⚠️ Port ${basePort} in use, trying ${basePort + 1}`);
-      return createWebSocketServer(basePort + 1);
-    }
-    throw err;
-  }
+
+    wss.on('listening', () => {
+      console.log(`✅ WebSocket listening on :${basePort}`);
+      resolve(wss);
+    });
+
+    wss.on('error', (err) => {
+      if (err.code === 'EADDRINUSE') {
+        console.warn(`⚠️ Port ${basePort} in use, trying ${basePort + 1}`);
+        resolve(createWebSocketServer(basePort + 1));
+      } else {
+        reject(err);
+      }
+    });
+  });
 }
 
 async function initFluvio() {
   try {
+    if (!Fluvio) {
+      console.warn("⚠️ Fluvio requires native modules not available on this OS. Mock mode enabled.");
+      return;
+    }
     const fluvio = new Fluvio({
       host: process.env.REACT_APP_FLUVIO_ENDPOINT || '127.0.0.1',
       port: 9003
@@ -89,7 +104,7 @@ async function startServers() {
 
       const { id, type, sender, message, timestamp } = req.body;
       const completeMsg = {
-        id:        id || Date.now().toString(),
+        id: id || Date.now().toString(),
         type,
         sender,
         message,
@@ -108,7 +123,7 @@ async function startServers() {
     });
 
     // WebSocket for streaming events
-    const wss = createWebSocketServer();
+    const wss = await createWebSocketServer();
     wss.on('connection', async (ws) => {
       if (!consumer) {
         ws.send(JSON.stringify({ error: 'Fluvio not initialized' }));
@@ -148,7 +163,7 @@ async function startServers() {
 initFluvio().catch(console.error);
 
 // Netlify Function handler for API endpoints
-exports.handler = async function(event, context) {
+exports.handler = async function (event, context) {
   // Handle WebSocket upgrade requests
   if (event.httpMethod === 'GET' && event.headers.Upgrade === 'websocket') {
     return {
@@ -182,7 +197,7 @@ exports.handler = async function(event, context) {
 
       await producer.send(completeMsg.id, JSON.stringify(completeMsg));
       console.log('📤 Message sent:', completeMsg);
-      
+
       return {
         statusCode: 200,
         body: JSON.stringify({ success: true })
